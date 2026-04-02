@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QL_BigCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChiNhanh">
+          <Key>
+            <PropertyRef Name="MaChiNhanh" />
+          </Key>
+          <Property Name="MaChiNhanh" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TenChiNhanh" Type="nvarchar" MaxLength="30" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="HangHoa">
+          <Key>
+            <PropertyRef Name="MaHangHoa" />
+          </Key>
+          <Property Name="MaHangHoa" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TenHangHoa" Type="nvarchar" MaxLength="100" />
+          <Property Name="DonGia" Type="int" />
+          <Property Name="MaNhaCungCap" Type="char" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Luong">
+          <Key>
+            <PropertyRef Name="MaLuong" />
+          </Key>
+          <Property Name="MaNhanVien" Type="char" MaxLength="10" />
+          <Property Name="MaLuong" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="MaQuanLy" Type="char" MaxLength="10" />
+          <Property Name="MaChiNhanh" Type="char" MaxLength="10" />
+          <Property Name="Luong" Type="int" />
+          <Property Name="Thue" Type="float" />
+          <Property Name="ChietKhau" Type="float" />
+          <Property Name="TongLuong" Type="int" />
+        </EntityType>
+        <EntityType Name="NhaCungCap">
+          <Key>
+            <PropertyRef Name="MaNhaCungCap" />
+          </Key>
+          <Property Name="MaNhaCungCap" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TenNhaCungCap" Type="nvarchar" MaxLength="100" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="NhanVien">
+          <Key>
+            <PropertyRef Name="MaNhanVien" />
+          </Key>
+          <Property Name="MaNhanVien" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TenNhanVien" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NgaySinh" Type="datetime" Nullable="false" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SDT" Type="char" MaxLength="13" />
+          <Property Name="CCCD" Type="char" MaxLength="15" />
+          <Property Name="NgayVaoLam" Type="datetime" Nullable="false" />
+          <Property Name="SoNgayLam" Type="int" />
+          <Property Name="MaQuanLy" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'QL_BigC.dbo.PhieuMuaHang' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PhieuMuaHang">
+          <Property Name="MaPhieu" Type="char" MaxLength="10" />
+          <Property Name="MaHangHoa" Type="char" MaxLength="10" />
+          <Property Name="MaNhaCungCap" Type="char" MaxLength="10" />
+          <Property Name="NgayDat" Type="datetime" />
+          <Property Name="NgayGiao" Type="datetime" />
+          <Property Name="SoLuong" Type="int" />
+          <Property Name="TongTien" Type="int" />
+          <Property Name="Mota" Type="nvarchar" MaxLength="100" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'QL_BigC.dbo.QL_NhanVien' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="QL_NhanVien">
+          <Property Name="MaNhanVien" Type="char" MaxLength="10" />
+          <Property Name="MaQuanLy" Type="char" MaxLength="10" />
+        </EntityType>-->
+        <EntityType Name="QuanLy">
+          <Key>
+            <PropertyRef Name="MaQuanLy" />
+          </Key>
+          <Property Name="MaQuanLy" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TenQuanLy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NgaySinh" Type="datetime" Nullable="false" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SDT" Type="char" MaxLength="13" />
+          <Property Name="CCCD" Type="char" MaxLength="15" />
+          <Property Name="NgayVaoLam" Type="datetime" Nullable="false" />
+          <Property Name="SoNgayLam" Type="int" />
+          <Property Name="MaChiNhanh" Type="char" MaxLength="10" />
+          <Property Name="SoNhanVienQuanLy" Type="int" />
+        </EntityType>
+        <Association Name="FK_Luong">
+          <End Role="QuanLy" Type="Self.QuanLy" Multiplicity="0..1" />
+          <End Role="Luong" Type="Self.Luong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuanLy">
+              <PropertyRef Name="MaQuanLy" />
+            </Principal>
+            <Dependent Role="Luong">
+              <PropertyRef Name="MaQuanLy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Luong1">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
+          <End Role="Luong" Type="Self.Luong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="MaNhanVien" />
+            </Principal>
+            <Dependent Role="Luong">
+              <PropertyRef Name="MaNhanVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Luong2">
+          <End Role="ChiNhanh" Type="Self.ChiNhanh" Multiplicity="0..1" />
+          <End Role="Luong" Type="Self.Luong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChiNhanh">
+              <PropertyRef Name="MaChiNhanh" />
+            </Principal>
+            <Dependent Role="Luong">
+              <PropertyRef Name="MaChiNhanh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NhanVien">
+          <End Role="QuanLy" Type="Self.QuanLy" Multiplicity="0..1" />
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuanLy">
+              <PropertyRef Name="MaQuanLy" />
+            </Principal>
+            <Dependent Role="NhanVien">
+              <PropertyRef Name="MaQuanLy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'QL_BigC.dbo.PhieuMuaHang' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_PhieuMuaHang_HangHoa" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'QL_BigC.dbo.PhieuMuaHang' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_PhieuMuaHang_NhaCungCap" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'QL_BigC.dbo.QL_NhanVien' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_QL" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'QL_BigC.dbo.QL_NhanVien' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_QL2" />-->
+        <Association Name="FK_QuanLy">
+          <End Role="ChiNhanh" Type="Self.ChiNhanh" Multiplicity="0..1" />
+          <End Role="QuanLy" Type="Self.QuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChiNhanh">
+              <PropertyRef Name="MaChiNhanh" />
+            </Principal>
+            <Dependent Role="QuanLy">
+              <PropertyRef Name="MaChiNhanh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_HangHoa">
+          <End Role="NhaCungCap" Type="Self.NhaCungCap" Multiplicity="0..1" />
+          <End Role="HangHoa" Type="Self.HangHoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhaCungCap">
+              <PropertyRef Name="MaNhaCungCap" />
+            </Principal>
+            <Dependent Role="HangHoa">
+              <PropertyRef Name="MaNhaCungCap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QL_BigCModelStoreContainer">
+          <EntitySet Name="ChiNhanh" EntityType="Self.ChiNhanh" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HangHoa" EntityType="Self.HangHoa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Luong" EntityType="Self.Luong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NhaCungCap" EntityType="Self.NhaCungCap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuanLy" EntityType="Self.QuanLy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Luong" Association="Self.FK_Luong">
+            <End Role="QuanLy" EntitySet="QuanLy" />
+            <End Role="Luong" EntitySet="Luong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Luong1" Association="Self.FK_Luong1">
+            <End Role="NhanVien" EntitySet="NhanVien" />
+            <End Role="Luong" EntitySet="Luong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Luong2" Association="Self.FK_Luong2">
+            <End Role="ChiNhanh" EntitySet="ChiNhanh" />
+            <End Role="Luong" EntitySet="Luong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NhanVien" Association="Self.FK_NhanVien">
+            <End Role="QuanLy" EntitySet="QuanLy" />
+            <End Role="NhanVien" EntitySet="NhanVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuanLy" Association="Self.FK_QuanLy">
+            <End Role="ChiNhanh" EntitySet="ChiNhanh" />
+            <End Role="QuanLy" EntitySet="QuanLy" />
+          </AssociationSet>
+          <AssociationSet Name="PK_HangHoa" Association="Self.PK_HangHoa">
+            <End Role="NhaCungCap" EntitySet="NhaCungCap" />
+            <End Role="HangHoa" EntitySet="HangHoa" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QL_BigCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChiNhanh">
+          <Key>
+            <PropertyRef Name="MaChiNhanh" />
+          </Key>
+          <Property Name="MaChiNhanh" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenChiNhanh" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Luongs" Relationship="Self.FK_Luong2" FromRole="ChiNhanh" ToRole="Luong" />
+          <NavigationProperty Name="QuanLies" Relationship="Self.FK_QuanLy" FromRole="ChiNhanh" ToRole="QuanLy" />
+        </EntityType>
+        <EntityType Name="HangHoa">
+          <Key>
+            <PropertyRef Name="MaHangHoa" />
+          </Key>
+          <Property Name="MaHangHoa" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenHangHoa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DonGia" Type="Int32" />
+          <Property Name="MaNhaCungCap" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="NhaCungCap" Relationship="Self.PK_HangHoa" FromRole="HangHoa" ToRole="NhaCungCap" />
+        </EntityType>
+        <EntityType Name="Luong">
+          <Key>
+            <PropertyRef Name="MaLuong" />
+          </Key>
+          <Property Name="MaNhanVien" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="MaLuong" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MaQuanLy" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="MaChiNhanh" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Luong1" Type="Int32" />
+          <Property Name="Thue" Type="Double" />
+          <Property Name="ChietKhau" Type="Double" />
+          <Property Name="TongLuong" Type="Int32" />
+          <NavigationProperty Name="ChiNhanh" Relationship="Self.FK_Luong2" FromRole="Luong" ToRole="ChiNhanh" />
+          <NavigationProperty Name="QuanLy" Relationship="Self.FK_Luong" FromRole="Luong" ToRole="QuanLy" />
+          <NavigationProperty Name="NhanVien" Relationship="Self.FK_Luong1" FromRole="Luong" ToRole="NhanVien" />
+        </EntityType>
+        <EntityType Name="NhaCungCap">
+          <Key>
+            <PropertyRef Name="MaNhaCungCap" />
+          </Key>
+          <Property Name="MaNhaCungCap" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenNhaCungCap" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HangHoas" Relationship="Self.PK_HangHoa" FromRole="NhaCungCap" ToRole="HangHoa" />
+        </EntityType>
+        <EntityType Name="NhanVien">
+          <Key>
+            <PropertyRef Name="MaNhanVien" />
+          </Key>
+          <Property Name="MaNhanVien" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenNhanVien" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NgaySinh" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SDT" Type="String" MaxLength="13" FixedLength="true" Unicode="false" />
+          <Property Name="CCCD" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="NgayVaoLam" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SoNgayLam" Type="Int32" />
+          <Property Name="MaQuanLy" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Luongs" Relationship="Self.FK_Luong1" FromRole="NhanVien" ToRole="Luong" />
+          <NavigationProperty Name="QuanLy" Relationship="Self.FK_NhanVien" FromRole="NhanVien" ToRole="QuanLy" />
+        </EntityType>
+        <EntityType Name="QuanLy">
+          <Key>
+            <PropertyRef Name="MaQuanLy" />
+          </Key>
+          <Property Name="MaQuanLy" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TenQuanLy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NgaySinh" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SDT" Type="String" MaxLength="13" FixedLength="true" Unicode="false" />
+          <Property Name="CCCD" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="NgayVaoLam" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SoNgayLam" Type="Int32" />
+          <Property Name="MaChiNhanh" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="SoNhanVienQuanLy" Type="Int32" />
+          <NavigationProperty Name="ChiNhanh" Relationship="Self.FK_QuanLy" FromRole="QuanLy" ToRole="ChiNhanh" />
+          <NavigationProperty Name="Luongs" Relationship="Self.FK_Luong" FromRole="QuanLy" ToRole="Luong" />
+          <NavigationProperty Name="NhanViens" Relationship="Self.FK_NhanVien" FromRole="QuanLy" ToRole="NhanVien" />
+        </EntityType>
+        <Association Name="FK_Luong2">
+          <End Role="ChiNhanh" Type="Self.ChiNhanh" Multiplicity="0..1" />
+          <End Role="Luong" Type="Self.Luong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChiNhanh">
+              <PropertyRef Name="MaChiNhanh" />
+            </Principal>
+            <Dependent Role="Luong">
+              <PropertyRef Name="MaChiNhanh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuanLy">
+          <End Role="ChiNhanh" Type="Self.ChiNhanh" Multiplicity="0..1" />
+          <End Role="QuanLy" Type="Self.QuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChiNhanh">
+              <PropertyRef Name="MaChiNhanh" />
+            </Principal>
+            <Dependent Role="QuanLy">
+              <PropertyRef Name="MaChiNhanh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_HangHoa">
+          <End Role="NhaCungCap" Type="Self.NhaCungCap" Multiplicity="0..1" />
+          <End Role="HangHoa" Type="Self.HangHoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhaCungCap">
+              <PropertyRef Name="MaNhaCungCap" />
+            </Principal>
+            <Dependent Role="HangHoa">
+              <PropertyRef Name="MaNhaCungCap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Luong">
+          <End Role="QuanLy" Type="Self.QuanLy" Multiplicity="0..1" />
+          <End Role="Luong" Type="Self.Luong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuanLy">
+              <PropertyRef Name="MaQuanLy" />
+            </Principal>
+            <Dependent Role="Luong">
+              <PropertyRef Name="MaQuanLy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Luong1">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
+          <End Role="Luong" Type="Self.Luong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="MaNhanVien" />
+            </Principal>
+            <Dependent Role="Luong">
+              <PropertyRef Name="MaNhanVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NhanVien">
+          <End Role="QuanLy" Type="Self.QuanLy" Multiplicity="0..1" />
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuanLy">
+              <PropertyRef Name="MaQuanLy" />
+            </Principal>
+            <Dependent Role="NhanVien">
+              <PropertyRef Name="MaQuanLy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QL_BigCEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChiNhanhs" EntityType="Self.ChiNhanh" />
+          <EntitySet Name="HangHoas" EntityType="Self.HangHoa" />
+          <EntitySet Name="Luongs" EntityType="Self.Luong" />
+          <EntitySet Name="NhaCungCaps" EntityType="Self.NhaCungCap" />
+          <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+          <EntitySet Name="QuanLies" EntityType="Self.QuanLy" />
+          <AssociationSet Name="FK_Luong2" Association="Self.FK_Luong2">
+            <End Role="ChiNhanh" EntitySet="ChiNhanhs" />
+            <End Role="Luong" EntitySet="Luongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuanLy" Association="Self.FK_QuanLy">
+            <End Role="ChiNhanh" EntitySet="ChiNhanhs" />
+            <End Role="QuanLy" EntitySet="QuanLies" />
+          </AssociationSet>
+          <AssociationSet Name="PK_HangHoa" Association="Self.PK_HangHoa">
+            <End Role="NhaCungCap" EntitySet="NhaCungCaps" />
+            <End Role="HangHoa" EntitySet="HangHoas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Luong" Association="Self.FK_Luong">
+            <End Role="QuanLy" EntitySet="QuanLies" />
+            <End Role="Luong" EntitySet="Luongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Luong1" Association="Self.FK_Luong1">
+            <End Role="NhanVien" EntitySet="NhanViens" />
+            <End Role="Luong" EntitySet="Luongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NhanVien" Association="Self.FK_NhanVien">
+            <End Role="QuanLy" EntitySet="QuanLies" />
+            <End Role="NhanVien" EntitySet="NhanViens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QL_BigCModelStoreContainer" CdmEntityContainer="QL_BigCEntities1">
+          <EntitySetMapping Name="ChiNhanhs">
+            <EntityTypeMapping TypeName="QL_BigCModel.ChiNhanh">
+              <MappingFragment StoreEntitySet="ChiNhanh">
+                <ScalarProperty Name="MaChiNhanh" ColumnName="MaChiNhanh" />
+                <ScalarProperty Name="TenChiNhanh" ColumnName="TenChiNhanh" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HangHoas">
+            <EntityTypeMapping TypeName="QL_BigCModel.HangHoa">
+              <MappingFragment StoreEntitySet="HangHoa">
+                <ScalarProperty Name="MaHangHoa" ColumnName="MaHangHoa" />
+                <ScalarProperty Name="TenHangHoa" ColumnName="TenHangHoa" />
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+                <ScalarProperty Name="MaNhaCungCap" ColumnName="MaNhaCungCap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Luongs">
+            <EntityTypeMapping TypeName="QL_BigCModel.Luong">
+              <MappingFragment StoreEntitySet="Luong">
+                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+                <ScalarProperty Name="MaLuong" ColumnName="MaLuong" />
+                <ScalarProperty Name="MaQuanLy" ColumnName="MaQuanLy" />
+                <ScalarProperty Name="MaChiNhanh" ColumnName="MaChiNhanh" />
+                <ScalarProperty Name="Luong1" ColumnName="Luong" />
+                <ScalarProperty Name="Thue" ColumnName="Thue" />
+                <ScalarProperty Name="ChietKhau" ColumnName="ChietKhau" />
+                <ScalarProperty Name="TongLuong" ColumnName="TongLuong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NhaCungCaps">
+            <EntityTypeMapping TypeName="QL_BigCModel.NhaCungCap">
+              <MappingFragment StoreEntitySet="NhaCungCap">
+                <ScalarProperty Name="MaNhaCungCap" ColumnName="MaNhaCungCap" />
+                <ScalarProperty Name="TenNhaCungCap" ColumnName="TenNhaCungCap" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NhanViens">
+            <EntityTypeMapping TypeName="QL_BigCModel.NhanVien">
+              <MappingFragment StoreEntitySet="NhanVien">
+                <ScalarProperty Name="MaNhanVien" ColumnName="MaNhanVien" />
+                <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="CCCD" ColumnName="CCCD" />
+                <ScalarProperty Name="NgayVaoLam" ColumnName="NgayVaoLam" />
+                <ScalarProperty Name="SoNgayLam" ColumnName="SoNgayLam" />
+                <ScalarProperty Name="MaQuanLy" ColumnName="MaQuanLy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuanLies">
+            <EntityTypeMapping TypeName="QL_BigCModel.QuanLy">
+              <MappingFragment StoreEntitySet="QuanLy">
+                <ScalarProperty Name="MaQuanLy" ColumnName="MaQuanLy" />
+                <ScalarProperty Name="TenQuanLy" ColumnName="TenQuanLy" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="CCCD" ColumnName="CCCD" />
+                <ScalarProperty Name="NgayVaoLam" ColumnName="NgayVaoLam" />
+                <ScalarProperty Name="SoNgayLam" ColumnName="SoNgayLam" />
+                <ScalarProperty Name="MaChiNhanh" ColumnName="MaChiNhanh" />
+                <ScalarProperty Name="SoNhanVienQuanLy" ColumnName="SoNhanVienQuanLy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
